@@ -34,8 +34,8 @@ namespace Notebook
 
 				case "a":
 					Console.WriteLine("Режим добавления новой записи.");
-					notes.Add(HandleAddCommand());
-					Console.WriteLine($"Запись была добавлена в записную книжку под номером {notes.Count - 1}.\n");
+					HandleAddCommand(notes);
+					Console.WriteLine();
 					break;
 
 				case "d":
@@ -128,7 +128,7 @@ namespace Notebook
 			}
 		}
 
-		static Note HandleAddCommand()
+		static void HandleAddCommand(List<Note> notes)
 		{
 			Console.WriteLine("Последовательно вводите запрашиваемую информацию:");
 
@@ -171,7 +171,8 @@ namespace Notebook
 			note.Position = AddingField("должность", false);
 			note.Info = AddingField("дополнительную информацию", false);
 
-			return note;
+			notes.Add(note);
+			Console.WriteLine($"Запись была добавлена в записную книжку под номером {notes.Count - 1}.");
 		}
 
 		static void HandleDeleteCommand(List<Note> notes)
