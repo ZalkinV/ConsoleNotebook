@@ -42,7 +42,7 @@ namespace Notebook
 					if (notes.Count > 0)
 					{
 						Console.WriteLine("Режим удаления записи:");
-						Program.PrintNotes(notes);
+						Notebook.PrintNotes(notes);
 						Console.Write("Выберите запись для удаления, введя её номер из списка выше: ");
 						HandleDeleteCommand(notes);
 					}
@@ -57,7 +57,7 @@ namespace Notebook
 					if (notes.Count > 0)
 					{
 						Console.WriteLine("Режим изменения записи:");
-						Program.PrintNotes(notes);
+						Notebook.PrintNotes(notes);
 						Console.Write("Выберите запись для изменения, введя её номер из списка выше: ");
 						HandleEditCommand(notes);
 					}
@@ -100,7 +100,7 @@ namespace Notebook
 			string infoForUser = "Выберите запись для просмотра дополнительной информации, введя её номер из списка выше: ";
 
 			Console.WriteLine("Существующие записи в записной книжке:");
-			Program.PrintNotes(notes);
+			Notebook.PrintNotes(notes);
 			Console.Write(infoForUser);
 
 			while (true)
@@ -112,7 +112,7 @@ namespace Notebook
 					break;
 				}
 
-				int indexForPrint = Program.GetNoteIndex(notes, userInput);
+				int indexForPrint = Notebook.GetNoteIndex(notes, userInput);
 				if (indexForPrint > -1)
 				{
 					string[] fullInfo = notes[indexForPrint].GetFullInfo();
@@ -185,7 +185,7 @@ namespace Notebook
 					break;
 				}
 
-				int indexForDelete = Program.GetNoteIndex(notes, userInput);
+				int indexForDelete = Notebook.GetNoteIndex(notes, userInput);
 				if (indexForDelete > -1)
 				{
 					notes.RemoveAt(indexForDelete);
@@ -211,7 +211,7 @@ namespace Notebook
 					break;
 				}
 
-				indexForEdit = Program.GetNoteIndex(notes, userInput);
+				indexForEdit = Notebook.GetNoteIndex(notes, userInput);
 				if (indexForEdit > -1)
 				{
 					Console.WriteLine("Для того, чтобы очистить значение, поставьте один пробел. Чтобы не изменять значение, оставьте поле ввода пустым.");

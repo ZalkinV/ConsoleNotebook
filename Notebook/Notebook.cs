@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Notebook
 {
-	class Program
+	class Notebook
 	{
 		static string ProgramName { get; set; } = "ZalNotes";
 
