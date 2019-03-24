@@ -43,7 +43,6 @@ namespace Notebook
 					{
 						Console.WriteLine("Режим удаления записи:");
 						Notebook.PrintNotes();
-						Console.Write("Выберите запись для удаления, введя её номер из списка выше: ");
 						HandleDeleteCommand(notes);
 					}
 					else
@@ -58,7 +57,6 @@ namespace Notebook
 					{
 						Console.WriteLine("Режим изменения записи:");
 						Notebook.PrintNotes();
-						Console.Write("Выберите запись для изменения, введя её номер из списка выше: ");
 						HandleEditCommand(notes);
 					}
 					else
@@ -97,34 +95,17 @@ namespace Notebook
 
 		static void HandlePrintCommand(List<Note> notes)
 		{
-			string infoForUser = "Выберите запись для просмотра дополнительной информации, введя её номер из списка выше: ";
-
-			Console.WriteLine("Существующие записи в записной книжке:");
+			Console.WriteLine("Для просмотра дополнительной информации о записи, введите её номер из списка ниже.");
 			Notebook.PrintNotes();
-			Console.Write(infoForUser);
 
-			while (true)
+			int indexForPrint = SelectingNoteIndex();
+			if (indexForPrint > -1)
 			{
-				string userInput = Console.ReadLine();
-
-				if (string.IsNullOrEmpty(userInput))
+				string[] fullInfo = notes[indexForPrint].GetFullInfo();
+				foreach (string infoLine in fullInfo)
 				{
-					break;
+					Console.WriteLine(infoLine);
 				}
-
-				int indexForPrint = Notebook.GetNoteIndex(userInput);
-				if (indexForPrint > -1)
-				{
-					string[] fullInfo = notes[indexForPrint].GetFullInfo();
-					foreach (string infoLine in fullInfo)
-					{
-						Console.WriteLine(infoLine);
-					}
-					break;
-				}
-
-				Console.WriteLine("Попробуйте ещё раз или оставьте поле ввода пустым для отмены операции.");
-				Console.Write(infoForUser);
 			}
 		}
 
@@ -177,54 +158,25 @@ namespace Notebook
 
 		static void HandleDeleteCommand(List<Note> notes)
 		{
-			while (true)
+			int indexForDelete = SelectingNoteIndex();
+
+			if (indexForDelete > -1)
 			{
-				string userInput = Console.ReadLine();
-
-				if (string.IsNullOrEmpty(userInput))
-				{
-					break;
-				}
-
-				int indexForDelete = Notebook.GetNoteIndex(userInput);
-				if (indexForDelete > -1)
-				{
-					notes.RemoveAt(indexForDelete);
-					Console.WriteLine($"Запись с индексом {indexForDelete} была удалена.");
-					break;
-				}
-
-				Console.WriteLine("Попробуйте ещё раз или оставьте поле ввода пустым для отмены операции.");
-				Console.Write("Выберите запись для удаления: ");
+				notes.RemoveAt(indexForDelete);
+				Console.WriteLine($"Запись под номером {indexForDelete} была удалена.");
 			}
 		}
 
 		static void HandleEditCommand(List<Note> notes)
 		{
-			int indexForEdit = -1;
+			int indexForEdit = SelectingNoteIndex();
 
-			while (true)
+			if (indexForEdit > -1)
 			{
-				string userInput = Console.ReadLine();
-
-				if (string.IsNullOrEmpty(userInput))
-				{
-					break;
-				}
-
-				indexForEdit = Notebook.GetNoteIndex(userInput);
-				if (indexForEdit > -1)
-				{
-					Console.WriteLine("Для того, чтобы очистить значение, поставьте один пробел. Чтобы не изменять значение, оставьте поле ввода пустым.");
-					EdititngNoteFields(notes[indexForEdit]);
-					break;
-				}
-
-				Console.WriteLine("Попробуйте ещё раз или оставьте поле ввода пустым для отмены операции.");
-				Console.Write("Выберите запись для редактирования: ");
+				Console.WriteLine("Для того, чтобы очистить значение, поставьте один пробел. Чтобы не изменять значение, оставьте поле ввода пустым.");
+				EdititngNoteFields(notes[indexForEdit]);
+				Console.WriteLine($"Запись под номером {indexForEdit} была изменена.");
 			}
-
-			Console.WriteLine($"Запись с номером {indexForEdit} была изменена.");
 		}
 
 
@@ -334,6 +286,32 @@ namespace Notebook
 			}
 
 			return inputValue;
+		}
+
+		static int SelectingNoteIndex()
+		{
+			int noteIndex = -1;
+			while (true)
+			{
+				Console.Write("Введите номер записи: ");
+				string userInput = Console.ReadLine();
+
+				if (string.IsNullOrEmpty(userInput))
+				{
+					break;
+				}
+				else
+				{
+					noteIndex = Notebook.GetNoteIndex(userInput);
+
+					if (noteIndex < 0)
+						Console.WriteLine("Попробуйте ещё раз или оставьте поле ввода пустым для отмены операции.");
+					else
+						break;
+				}
+			}
+
+			return noteIndex;
 		}
 
 
