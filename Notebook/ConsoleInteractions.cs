@@ -215,7 +215,7 @@ namespace Notebook
 				if (indexForEdit > -1)
 				{
 					Console.WriteLine("Для того, чтобы очистить значение, поставьте один пробел. Чтобы не изменять значение, оставьте поле ввода пустым.");
-					ChangingNoteFields(notes[indexForEdit]);
+					EdititngNoteFields(notes[indexForEdit]);
 					break;
 				}
 
@@ -251,7 +251,7 @@ namespace Notebook
 			return inputValue;
 		}
 
-		static void ChangingNoteFields(Note note)
+		static void EdititngNoteFields(Note note)
 		{
 			note.LastName = EditingField("Фамилия", note.LastName, true);
 			note.FirstName = EditingField($"Имя", note.FirstName, true);
