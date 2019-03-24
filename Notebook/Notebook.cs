@@ -9,14 +9,14 @@ namespace Notebook
 	class Notebook
 	{
 		static string ProgramName { get; set; } = "ZalNotes";
+		static List<Note> notes = new List<Note>();
 
 		static void Main(string[] args)
 		{
 			PrintEntryMessage();
 			Console.WriteLine();
 
-			List<Note> notes = new List<Note>();
-			AddTestData(notes);
+			AddTestData();
 
 
 			bool isWorking = true;
@@ -32,7 +32,7 @@ namespace Notebook
 			Console.ReadKey();
 		}
 
-		public static void PrintNotes(List<Note> notes)
+		public static void PrintNotes()
 		{
 			for (int i = 0; i < notes.Count; i++)
 			{
@@ -40,7 +40,7 @@ namespace Notebook
 			}
 		}
 
-		public static int GetNoteIndex(List<Note> notes, string userInput)
+		public static int GetNoteIndex(string userInput)
 		{
 			int index;
 
@@ -73,7 +73,7 @@ namespace Notebook
 			Console.WriteLine("До встречи!");
 		}
 
-		static void AddTestData(List<Note> notes)
+		static void AddTestData()
 		{
 			Note testNote1 = new Note()
 			{
