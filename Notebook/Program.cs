@@ -22,82 +22,88 @@ namespace Notebook
 			bool isWorking = true;
 			while (isWorking)
 			{
-				Console.Write("Введите команду: ");
-				string command = Console.ReadLine();
-
-				switch (command)
-				{
-					case "h":
-						PrintAvailableCommands();
-						Console.WriteLine();
-						break;
-
-					case "l":
-						if (notes.Count > 0)
-						{
-							HandlePrintCommand(notes);
-						}
-						else
-						{
-							PrintEmptinessMessage();
-						}
-						Console.WriteLine();
-						break;
-
-					case "a":
-						Console.WriteLine("Режим добавления новой записи.");
-						notes.Add(HandleAddCommand());
-						Console.WriteLine($"Запись была добавлена в записную книжку под номером {notes.Count - 1}.\n");
-						break;
-
-					case "d":
-						if (notes.Count > 0)
-						{
-							Console.WriteLine("Режим удаления записи:");
-							PrintNotes(notes);
-							Console.Write("Выберите запись для удаления, введя её номер из списка выше: ");
-							HandleDeleteCommand(notes);
-						}
-						else
-						{
-							PrintEmptinessMessage();
-						}
-						Console.WriteLine();
-						break;
-
-					case "e":
-						if (notes.Count > 0)
-						{
-							Console.WriteLine("Режим изменения записи:");
-							PrintNotes(notes);
-							Console.Write("Выберите запись для изменения, введя её номер из списка выше: ");
-							HandleEditCommand(notes);
-						}
-						else
-						{
-							PrintEmptinessMessage();
-							Console.WriteLine();
-						}
-						break;
-
-					case "x":
-						isWorking = false;
-						PrintExitMessage();
-						Console.WriteLine();
-						break;
-
-					case "":
-						break;
-
-					default:
-						Console.WriteLine("Вы ввели неверную команду! Введите команду из списка ниже:");
-						PrintAvailableCommands();
-						Console.WriteLine();
-						break;
-				}
+				isWorking = CommandHandling(notes);
 			}
 			Console.WriteLine("Нажмите любую клавишу для выхода из программы...");
 			Console.ReadKey();
+		}
+
+		static bool CommandHandling(List<Note> notes)
+		{
+			Console.Write("Введите команду: ");
+			string command = Console.ReadLine();
+
+			switch (command)
+			{
+				case "h":
+					PrintAvailableCommands();
+					Console.WriteLine();
+					break;
+
+				case "l":
+					if (notes.Count > 0)
+					{
+						HandlePrintCommand(notes);
+					}
+					else
+					{
+						PrintEmptinessMessage();
+					}
+					Console.WriteLine();
+					break;
+
+				case "a":
+					Console.WriteLine("Режим добавления новой записи.");
+					notes.Add(HandleAddCommand());
+					Console.WriteLine($"Запись была добавлена в записную книжку под номером {notes.Count - 1}.\n");
+					break;
+
+				case "d":
+					if (notes.Count > 0)
+					{
+						Console.WriteLine("Режим удаления записи:");
+						PrintNotes(notes);
+						Console.Write("Выберите запись для удаления, введя её номер из списка выше: ");
+						HandleDeleteCommand(notes);
+					}
+					else
+					{
+						PrintEmptinessMessage();
+					}
+					Console.WriteLine();
+					break;
+
+				case "e":
+					if (notes.Count > 0)
+					{
+						Console.WriteLine("Режим изменения записи:");
+						PrintNotes(notes);
+						Console.Write("Выберите запись для изменения, введя её номер из списка выше: ");
+						HandleEditCommand(notes);
+					}
+					else
+					{
+						PrintEmptinessMessage();
+						Console.WriteLine();
+					}
+					break;
+
+				case "x":
+					PrintExitMessage();
+					Console.WriteLine();
+					return false;
+
+				case "":
+					break;
+
+				default:
+					Console.WriteLine("Вы ввели неверную команду! Введите команду из списка ниже:");
+					PrintAvailableCommands();
+					Console.WriteLine();
+					break;
+			}
+
+			return true;
 		}
 
 
